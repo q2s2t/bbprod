@@ -1,7 +1,6 @@
 require "util"
 
 require("prototypes.mod-data")
-require("prototypes.sprite")
 require("compat.base")
 require("compat.space-age")
 --TODO require("compat.maraxis")
