@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 03. 08. 2026
+  Features:
+    - Added a startup setting to include product groups whose recipes do not allow productivity.
+  Changes:
+    - Added validation and removal syntax for configurable recipes, product groups, unit presets, and unit assignments.
+  Modding:
+    - Added a mod-data configuration API that lets other mods extend or override Blueberry Productivity settings during the data stage.
+  Compatibility:
+    - Added Space Age Galore compatibility
+  Bugfixes:
+    - Removed an unused external sprite dependency.
+    - Fixed configuration parsing and validation failures producing invalid productivity technologies.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 29. 07. 2026
+  Major Features:
+    - Initial release.

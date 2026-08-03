@@ -1,12 +1,12 @@
 {
   "name": "bbprod",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "title": "Blueberry Productivity",
   "author": "q2s2t",
   "contact": "qr+factorio@bleu.gdn",
   "homepage": "https://mods.factorio.com/mod/bbprod",
-  "factorio_version": "2.1",
   "description": "",
+  "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.0.1",
     "? space-age",

@@ -1,12 +1,12 @@
 data:extend({
 
-  { name = "bbprod-ignore-recipes",
+  { name = "bbprod-ignore-recipe",
     setting_type = "startup",
     type = "string-setting",
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "1",
+    order = "01",
   },
 
   { name = "bbprod-ignore-group",
@@ -15,7 +15,16 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "2",
+    order = "02a",
+  },
+
+  { name = "bbprod-add-group",
+    setting_type = "startup",
+    type = "string-setting",
+    default_value = "",
+    allow_blank = true,
+    auto_trim = true,
+    order = "02b",
   },
 
   { name = "bbprod-merge-group",
@@ -24,7 +33,7 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "3",
+    order = "03",
   },
 
   { name = "bbprod-alt-main-result",
@@ -33,16 +42,16 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "4",
+    order = "04",
   },
-  
+
   { name = "bbprod-unit",
     setting_type = "startup",
     type = "string-setting",
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "5",
+    order = "05",
   },
 
   { name = "bbprod-unit-from-category",
@@ -51,7 +60,7 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "6",
+    order = "06",
   },
 
   { name = "bbprod-unit-from-special",
@@ -60,7 +69,7 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "7",
+    order = "07",
   },
 
   { name = "bbprod-unit-from-group",
@@ -69,7 +78,7 @@ data:extend({
     default_value = "",
     allow_blank = true,
     auto_trim = true,
-    order = "8",
+    order = "08",
   },
 
   { name = "bbprod-remove-space-age-tech",
@@ -77,7 +86,7 @@ data:extend({
     type = "bool-setting",
     default_value = true,
     hidden = not mods["space-age"],
-    order = "9",
+    order = "10",
   },
 
 })
