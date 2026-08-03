@@ -1,11 +1,11 @@
 {
   "name": "bbprod",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "title": "Blueberry Productivity",
   "author": "q2s2t",
   "contact": "qr+factorio@bleu.gdn",
   "homepage": "https://mods.factorio.com/mod/bbprod",
-  "description": "",
+  "description": "Automatically creates repeatable productivity technologies for intermediate products, just like the infinite research added by Space Age.",
   "factorio_version": "2.1",
   "dependencies": [
     "base >= 2.0.1",
