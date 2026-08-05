@@ -5,6 +5,7 @@
 -- configuration. Finally, optionally hide Space Age's overlapping technologies.
 
 local api = require("api")
+local valid = require("lualib.valid")
 local config = api.config
 
 
@@ -25,7 +26,7 @@ for _, recipe in pairs(data.raw["recipe"]) do repeat
   if config.ignore_group[result.name] then break end
   -- skip not intermediate product or added group
   if not recipe.allow_productivity and not config.add_group[result.name] then break end
-   -- skip recycling
+  -- skip recycling
   if recipe.categories and util.contains_value(recipe.categories, "recycling") then break end
   -- get the group entry or create a new one if it doesn't exist
   groups[result.name] = groups[result.name] or { recipes = {} }
@@ -33,12 +34,15 @@ for _, recipe in pairs(data.raw["recipe"]) do repeat
 
 until true end
 
+
+-- Merge group
 for merged_name, merged_results in pairs(api.config.merge_group) do
   local merged_recipes = {}
-  for _, group in pairs(merged_results) do
+  for _, group in pairs(merged_results) do repeat
+    if not groups[group] then break end
     for _, recipe in ipairs(groups[group].recipes) do table.insert(merged_recipes, recipe) end
     groups[group] = nil
-  end
+  until true end
   groups[merged_name] = { recipes = merged_recipes }
 end
 
@@ -52,7 +56,7 @@ for k, group in pairs(groups) do repeat
   if not result then result = data.raw["recipe"][group.recipes[1]].results[1] end -- failover
   local alt_main_result = config.alt_main_result[k]
   if alt_main_result then
-    result = api.storage.valid_result[alt_main_result]
+    result = valid.result[alt_main_result]
     result.name = alt_main_result
   end
   local result_type = result.type == "fluid" and "fluid" or "item"
@@ -72,11 +76,11 @@ for k, group in pairs(groups) do repeat
     then unit_name = config.unit_from_special["fluid"] end
 
   if config.unit_from_special["fuel"]
-    and api.storage.valid_result[result.name].fuel_value
+    and valid.result[result.name].fuel_value
     then unit_name = config.unit_from_special["fuel"] end
 
   if config.unit_from_special["science-pack"] 
-    and util.contains_value(api.storage.valid_science_pack, k)
+    and util.contains_value(valid.science_pack, k)
     then unit_name = config.unit_from_special["science-pack"] end
 
   if config.unit_from_group[k]
@@ -93,7 +97,7 @@ for k, group in pairs(groups) do repeat
   local icons = {
     { icon = "__bbprod__/graphics/technology/bb-productivity.png",
       icon_size = 256, },
-    { icon = api.storage.valid_result[result.name].icon,
+    { icon = valid.result[result.name].icon,
       icon_size = 64,
       scale = 1,
       shift = { 0, -35 },
@@ -124,7 +128,7 @@ for k, group in pairs(groups) do repeat
     name = "bbprod-"..k.."-productivity",
     localised_name = { "technology-name.bbprod-productivity", localised_key },
     localised_description = { "technology-description.bbprod-productivity", localised_key },
-    order = api.storage.valid_result[result.name].order,
+    order = valid.result[result.name].order,
     icons = icons,
     effects = effects,
     prerequisites = prerequisites,
@@ -138,6 +142,7 @@ for k, group in pairs(groups) do repeat
 until true end
 
 
+-- Space Age technology to remove
 if api.config.remove_space_age_tech then
   local technologies = {
     "steel-plate-productivity",
