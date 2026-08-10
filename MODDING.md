@@ -5,12 +5,10 @@ Other mods can extend or override Blueberry Productivity's configuration with a 
 Every configuration field is optional. The following example shows all available fields:
 
 ```lua
-local api = require("__bbprod__/api")
-
 data:extend({{
   type = "mod-data",
   name = "my-mod-bbprod-config",
-  data_type = api.config.data_type,
+  data_type = "bbprod.config.v0",
   data = {
     -- Identifies the configuration provider in diagnostics.
     source = "my-mod",
