@@ -1,7 +1,10 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.0.5
-Date: ????
+Version: 0.1.0
+Date: 2026-08-10
   Changes:
+    - Added setting for including ammo, modules, and science packs in productivity technology generation.
+  Modding:
+    - Extended the mod-data API with configurable alternative technology results and icons.
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.4
 Date: 2026-08-06

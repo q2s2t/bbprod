@@ -11,7 +11,7 @@ local config = api.config
 
 -- Creates the base groups. 1 group == 1 productivity technology
 local groups = {}
-for _, recipe in pairs(data.raw["recipe"]) do repeat
+for k, recipe in pairs(data.raw["recipe"]) do repeat
 
   -- skip recipe has results?
   if not recipe.results then break end
@@ -19,31 +19,39 @@ for _, recipe in pairs(data.raw["recipe"]) do repeat
   -- skip hidden recipes
   if recipe.hidden then break end
   -- skip ignored recipes
-  if config.ignore_recipe[recipe.name] then break end
+  if config.ignore_recipe[k] then break end
   -- main result of the recipe
   local result = util.get_recipe_main_product(recipe) or recipe.results[1]
+  local group = result.name
+  if not group then break end
+  if not valid.result[group] then break end
   -- skip ignored result
-  if config.ignore_group[result.name] then break end
+  if config.ignore_group[group] then break end
   -- skip not intermediate product or added group
-  if not recipe.allow_productivity and not config.add_group[result.name] then break end
+  if not  (recipe.allow_productivity)
+  and not (config.add_group[group])
+  and not (config.add_ammo == true and valid.result[group].ammo_category)
+  and not (config.add_module == true and valid.result[group].is_module)
+  then break end
   -- skip recycling
   if recipe.categories and util.contains_value(recipe.categories, "recycling") then break end
   -- get the group entry or create a new one if it doesn't exist
-  groups[result.name] = groups[result.name] or { recipes = {} }
-  table.insert(groups[result.name].recipes, recipe.name)
+  groups[group] = groups[group] or { recipes = {} }
+  table.insert(groups[group].recipes, k)
 
 until true end
 
 
 -- Merge group
-for merged_name, merged_results in pairs(api.config.merge_group) do
+for k, merged_results in pairs(api.config.merge_group) do
   local merged_recipes = {}
   for _, group in pairs(merged_results) do repeat
     if not groups[group] then break end
     for _, recipe in ipairs(groups[group].recipes) do table.insert(merged_recipes, recipe) end
     groups[group] = nil
   until true end
-  groups[merged_name] = { recipes = merged_recipes }
+  groups[k] = { recipes = merged_recipes }
+  if not groups[k].recipes[1] then groups[k] = nil end
 end
 
 
@@ -66,9 +74,7 @@ for k, group in pairs(groups) do repeat
   local unit_name = config.unit_from_special["any"]
 
   if main_categories then for category, unit in pairs(config.unit_from_category) do
-    if util.contains_value(main_categories, category) then
-      unit_name = unit
-    end
+    if util.contains_value(main_categories, category) then unit_name = unit end
   end end
 
   if config.unit_from_special["fluid"]
@@ -79,6 +85,14 @@ for k, group in pairs(groups) do repeat
     and valid.result[result.name].fuel_value
     then unit_name = config.unit_from_special["fuel"] end
 
+  if config.unit_from_special["ammo"]
+    and valid.result[result.name].ammo_category
+    then unit_name = config.unit_from_special["ammo"] end
+
+  if config.unit_from_special["module"]
+    and valid.result[result.name].is_module
+    then unit_name = config.unit_from_special["module"] end
+
   if config.unit_from_special["science-pack"] 
     and util.contains_value(valid.science_pack, k)
     then unit_name = config.unit_from_special["science-pack"] end
@@ -88,6 +102,8 @@ for k, group in pairs(groups) do repeat
 
   if unit_name == "ignore" then break end
 
+  if not valid.result[result.name] then break end
+
   -- FIXME shortchut that works if the prerequisites and science pack have the same name
   local prerequisites = {}
   for _, i in pairs(config.unit[unit_name].ingredients) do
@@ -96,19 +112,22 @@ for k, group in pairs(groups) do repeat
 
   local icons = {
     { icon = "__bbprod__/graphics/technology/bb-productivity.png",
-      icon_size = 256, },
+    icon_size = 256, },
     { icon = valid.result[result.name].icon,
-      icon_size = 64,
-      scale = 1,
-      shift = { 0, -35 },
-      floating = true,
-      draw_background = true },
+    icon_size = 64,
+    scale = 1,
+    shift = { 0, -35 },
+    floating = true,
+    draw_background = true },
     { icon = "__core__/graphics/icons/technology/constants/constant-recipe-productivity.png",
-      icon_size = 128,
-      scale = 0.5,
-      shift = { 50, 50 },
-      floating = true }
-  }
+    icon_size = 128,
+    scale = 0.5,
+    shift = { 50, 50 },
+    floating = true }
+    }
+  
+  if config.alt_icon[k] then
+    for k_alt, v_alt in pairs(config.alt_icon[k]) do icons[2][k_alt] = v_alt end end
 
   local effects = {}
   for _, recipe in pairs(group.recipes) do
@@ -128,7 +147,7 @@ for k, group in pairs(groups) do repeat
     name = "bbprod-"..k.."-productivity",
     localised_name = { "technology-name.bbprod-productivity", localised_key },
     localised_description = { "technology-description.bbprod-productivity", localised_key },
-    order = valid.result[result.name].order,
+    order = "[bbprod]"..valid.result[result.name].order,
     icons = icons,
     effects = effects,
     prerequisites = prerequisites,
@@ -143,20 +162,11 @@ until true end
 
 
 -- Space Age technology to remove
-if api.config.remove_space_age_tech then
-  local technologies = {
-    "steel-plate-productivity",
-    "low-density-structure-productivity",
-    "processing-unit-productivity",
-    "plastic-bar-productivity",
-    "rocket-fuel-productivity",
-    "rocket-part-productivity",
-  }
-  for _, technology_name in pairs(technologies) do
+if api.config.remove_tech then
+  for _, technology_name in pairs(config.removed_tech) do repeat
     local technology = data.raw.technology[technology_name]
-    if technology then
-      technology.hidden = true
-      technology.enabled = false
-    end
-  end
+    if not technology then break end 
+    technology.hidden = true
+    technology.enabled = false
+  until true end
 end

@@ -5,10 +5,12 @@ local valid = require("lualib.valid")
 local contains = require("util").contains_value
 local config = api.config
 
-valid.get_result()
-valid.get_science_pack()
+
+valid.result = require("lualib.valid_result")
+valid.science_pack = require("lualib.valid_science_pack")
 valid.unit = { "ignore" } -- will be populated
-valid.special = { "any", "fluid", "fuel", "science-pack" }
+valid.special = { "any", "fluid", "fuel", "ammo", "module", "science-pack" }
+
 
 api.apply_data_config(function (mod_data)
 
@@ -87,6 +89,21 @@ api.apply_data_config(function (mod_data)
 
   config.remove_space_age_tech = mod_data.remove_space_age_tech
 
+  config.add_ammo = mod_data.add_ammo
+
+  config.add_module = mod_data.add_module
+
+  config.add_science_pack = mod_data.add_science_pack
+  if config.add_science_pack == false then config.unit_from_special["science-pack"] = "ignore" end
+
+  config.alt_icon = config.alt_icon or {}
+  if mod_data.alt_icon then for k, alt in pairs(mod_data.alt_icon) do repeat
+    if alt == "--" then config.alt_icon[k] = nil break end
+    -- no validation
+    config.alt_icon[k] = alt
+  until true end end
+
 end)
+
 
 require("prototypes.technology")

@@ -27,6 +27,27 @@ data:extend({
     order = "02b",
   },
 
+  { name = "bbprod-add-ammo",
+    setting_type = "startup",
+    type = "bool-setting",
+    default_value = false,
+    order = "02c",
+  },
+
+  { name = "bbprod-add-module",
+    setting_type = "startup",
+    type = "bool-setting",
+    default_value = false,
+    order = "02d",
+  },
+
+  { name = "bbprod-add-science-pack",
+    setting_type = "startup",
+    type = "bool-setting",
+    default_value = false,
+    order = "02e",
+  },
+
   { name = "bbprod-merge-group",
     setting_type = "startup",
     type = "string-setting",
@@ -81,7 +102,7 @@ data:extend({
     order = "08",
   },
 
-  { name = "bbprod-remove-space-age-tech",
+  { name = "bbprod-remove-tech",
     setting_type = "startup",
     type = "bool-setting",
     default_value = true,

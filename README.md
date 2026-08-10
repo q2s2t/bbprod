@@ -16,7 +16,7 @@ Automatically creates repeatable productivity technologies for intermediate prod
 - Existing progress is migrated from the replaced Space Age technologies
 - Existing progress from **Expanded Productivity Research** is migrated when possible
 
-Mod authors can customize generated technologies through the [mod integration API](MODDING.md).
+Mod authors can customize generated technologies through the [mod integration API](https://github.com/q2s2t/bbprod/blob/main/MODDING.md).
 
 ## Configuration
 
@@ -30,4 +30,5 @@ The defaults are ready to play, but startup settings let you:
 - Keep or remove Space Age's overlapping productivity technologies
 
 ***
-With ❤️ from [q2s2t](https://mods.factorio.com/user/q2s2t)
+With ❤️ from [q2s2t](https://mods.factorio.com/user/q2s2t) | [☝️ Feedback is welcome!](https://mods.factorio.com/mod/bbprod/discussion)
+

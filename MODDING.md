@@ -30,6 +30,11 @@ data:extend({{
       ["firearm-magazine"] = true,
     },
 
+    -- Includes products classified as ammo, modules, or science packs.
+    add_ammo = true,
+    add_module = true,
+    add_science_pack = true,
+
     -- Combines product groups into one technology under the specified name.
     merge_group = {
       ["uranium-chain"] = { "uranium-235", "uranium-238", "uranium-fuel-cell", },
@@ -38,6 +43,16 @@ data:extend({{
     -- Uses another product for a group's technology name and icon.
     alt_main_result = {
       ["explosives"] = "cliff-explosives",
+    },
+
+    -- Overrides the icon layers used by a group's generated technology.
+    alt_icon = {
+      ["module"] = {
+        icon = "__base__/graphics/technology/module.png",
+        icon_size = 256,
+        scale = 0.25,
+        -- shift = { 0, -20 },
+      },
     },
 
     -- Defines research-cost presets using TechnologyUnit fields (https://lua-api.factorio.com/latest/types/TechnologyUnit.html)
@@ -96,7 +111,7 @@ For example, if built-in compatibility ignores the `barrel` group but another mo
 data = {
   -- Remove key:string.
   ignore_group = {
-    ["barrel"] = "--',
+    ["barrel"] = "--",
   },
 
   -- Remove key:multiple strings.

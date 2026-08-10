@@ -1,6 +1,6 @@
 {
   "name": "bbprod",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "title": "Blueberry Productivity",
   "author": "q2s2t",
   "contact": "qr+factorio@bleu.gdn",
@@ -10,6 +10,7 @@
   "dependencies": [
     "base >= 2.0.1",
     "? space-age",
+    "? quality",
     "(?) space_age_galore",
     "(?) ExpandedProductivityResearch"
   ]

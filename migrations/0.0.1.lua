@@ -1,10 +1,11 @@
-if settings.startup["bbprod-remove-space-age-tech"].value then
+if settings.startup["bbprod-remove-tech"].value then
   local technology_migrations = {
     ["steel-plate-productivity"] = "bbprod-steel-plate-productivity",
     ["low-density-structure-productivity"] = "bbprod-low-density-structure-productivity",
     ["processing-unit-productivity"] = "bbprod-processing-unit-productivity",
     ["plastic-bar-productivity"] = "bbprod-plastic-bar-productivity",
     ["rocket-fuel-productivity"] = "bbprod-rocket-fuel-productivity",
+    ["rocket-part-productivity"] = "bbprod-rocket-part-productivity",
   }
 
   for _, force in pairs(game.forces) do

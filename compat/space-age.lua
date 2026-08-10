@@ -24,6 +24,9 @@ data:extend({{
       ["tungsten-chain"] = { "tungsten-plate", "tungsten-carbide" },
       ["holmium-chain"] = { "holmium-plate", "holmium-solution" },
       ["lithium-chain"] = { "lithium-plate", "lithium" },
+      ["nauvis-biota"] = { "raw-fish", "tree-seed" },
+      ["gleba-biota"] = {},
+      ["capsule-ammo"] = { "capture-robot-rocket" }
     },
 
     alt_main_result = {
@@ -60,6 +63,17 @@ data:extend({{
         { "production-science-pack", 1 },
         { "cryogenic-science-pack", 1 },
       }},
+      ["planetary"] = { count_formula = "1.5^L*1000", time = 60, ingredients = {
+        { "automation-science-pack", 1 },
+        { "logistic-science-pack", 1 },
+        { "chemical-science-pack", 1 },
+        { "production-science-pack", 1 },
+        { "space-science-pack", 1 },
+        { "metallurgic-science-pack", 1 },
+        { "electromagnetic-science-pack", 1 },
+        { "agricultural-science-pack", 1 },
+        { "cryogenic-science-pack", 1 },
+      }},
       ["science-pack"] = { count_formula = "1.2^L*1000", time = 60, ingredients = {
         { "automation-science-pack", 1 },
         { "logistic-science-pack", 1 },
@@ -73,13 +87,14 @@ data:extend({{
         { "agricultural-science-pack", 1 },
         { "cryogenic-science-pack", 1 },
         { "promethium-science-pack", 1 },
-      }}
+      }},
     },
 
     unit_from_special = {
       ["any"] = "production",
       ["fluid"] = "--",
       ["fuel"] = "--",
+      ["module"] = "planetary",
       ["science-pack"] = "science-pack",
     },
 
@@ -110,6 +125,15 @@ data:extend({{
       ["stone"] = "space",
       ["petroleum-gas"] = "gleba",
       ["heavy-oil"] = "gleba",
-    }
+    },
+
+    removed_tech = {
+    "steel-plate-productivity",
+    "low-density-structure-productivity",
+    "processing-unit-productivity",
+    "plastic-bar-productivity",
+    "rocket-fuel-productivity",
+    "rocket-part-productivity",
+  }
 
 }}})
